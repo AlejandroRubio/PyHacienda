@@ -1,7 +1,7 @@
 # 🏛️ PyHacienda
 
 <p align="center">
-  <img src="img/logo.png" alt="PyHacienda logo" width="400"/>
+  <img src="img/logo.png" alt="PyHacienda logo" width="800"/>
 </p>
 
 > Automatización de reportes fiscales para la declaración de la renta española.  
