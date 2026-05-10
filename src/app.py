@@ -96,7 +96,7 @@ def ejecutar_scripts_sql_server(directorio):
 if __name__ == "__main__":
 
     # Paso 1: Cambiar año de los ficheros SQL
-    cambiar_ano_scripts_base()
+    #cambiar_ano_scripts_base()
 
     # Paso 2: Ejecución de los ficheros SQL
     #ejecutar_scripts_sql_server(SQL_SCRIPTS_DIR)
