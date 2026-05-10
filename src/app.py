@@ -24,10 +24,12 @@ def cambiar_ano_scripts_base():
 
 
 def leer_archivo(ruta):
-    for encoding in ("utf-8-sig", "utf-16", "latin-1"):
+    for encoding in ("utf-8-sig", "utf-16", "utf-16-le", "utf-16-be", "latin-1"):
         try:
             with open(ruta, "r", encoding=encoding) as f:
-                return f.read()
+                content = f.read()
+            if "\x00" not in content:
+                return content
         except UnicodeDecodeError:
             continue
     raise ValueError(f"No se pudo leer el archivo: {ruta}")
@@ -44,6 +46,8 @@ def dividir_por_go(sql):
 
 def ejecutar_scripts_sql_server(directorio):
     archivos_sql = []
+
+    directorio = directorio + "creacion"
 
     for root, _, files in os.walk(directorio):
         for file in files:
@@ -80,7 +84,7 @@ if __name__ == "__main__":
     #cambiar_ano_scripts_base()
 
     # Paso 2: Ejecución de los ficheros SQL
-    #ejecutar_scripts_sql_server(SQL_SCRIPTS_DIR)
+    ejecutar_scripts_sql_server(SQL_SCRIPTS_DIR)
 
     # Paso 3: Carga de tipos de cambio del año en curso
     cargar_tipos_cambio(int(f"20{ANIO_NUEVO}"))

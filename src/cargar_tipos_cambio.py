@@ -53,7 +53,7 @@ def cargar_tipos_cambio(anio: int):
 
         cursor.executemany(
             f"""
-            INSERT INTO {TABLA_EXCHANGE_RATES} (Divisa, Fecha, Cotizacion, FechaCarga)
+            INSERT INTO {TABLA_EXCHANGE_RATES} (divisa, fecha, cotizacion, fecha_carga)
             VALUES (?, ?, ?, ?)
             """,
             registros
