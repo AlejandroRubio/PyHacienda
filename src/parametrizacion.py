@@ -20,7 +20,7 @@ CONN_STR = (
 )
 
 # Tablas
-TABLA_EXCHANGE_RATES = "silver.TiposCambio"
+TABLA_EXCHANGE_RATES = "silver.tipos_cambio"
 
 # BCE
 ECB_HIST_ZIP_URL = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip"

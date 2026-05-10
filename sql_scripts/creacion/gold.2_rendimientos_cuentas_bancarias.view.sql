@@ -6,7 +6,7 @@ GO
 SET QUOTED_IDENTIFIER ON;
 GO
 
-CREATE OR ALTER VIEW [gold].[1_rendimientos_cuentas_bancarias]
+CREATE OR ALTER VIEW [gold].[2_rendimientos_cuentas_bancarias]
 AS
 /*
     Vista: [gold].[1_rendimientos_cuentas_bancarias]
