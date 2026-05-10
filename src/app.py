@@ -6,18 +6,32 @@ from parametrizacion import ANIO_VIEJO, ANIO_NUEVO, SQL_SCRIPTS_DIR, CONN_STR
 
 
 def cambiar_ano_scripts_base():
+    encodings = ("utf-8-sig", "utf-16", "utf-16-le", "utf-16-be", "latin-1")
     for root, dirs, files in os.walk(SQL_SCRIPTS_DIR):
         for file in files:
             print(f"Procesando fichero: {file}")
             if file.endswith(".sql"):
                 ruta_archivo = os.path.join(root, file)
 
-                with open(ruta_archivo, "r", encoding="utf-16le") as f:
-                    contenido = f.read()
+                contenido = None
+                encoding_usado = None
+                for enc in encodings:
+                    try:
+                        with open(ruta_archivo, "r", encoding=enc) as f:
+                            contenido = f.read()
+                        if "\x00" not in contenido:
+                            encoding_usado = enc
+                            break
+                        contenido = None
+                    except UnicodeDecodeError:
+                        continue
+
+                if contenido is None:
+                    raise ValueError(f"No se pudo leer el archivo: {ruta_archivo}")
 
                 contenido_nuevo = contenido.replace(ANIO_VIEJO, ANIO_NUEVO)
 
-                with open(ruta_archivo, "w", encoding="utf-16le") as f:
+                with open(ruta_archivo, "w", encoding=encoding_usado) as f:
                     f.write(contenido_nuevo)
 
                 print(f"Actualizado: {ruta_archivo}")
@@ -80,11 +94,12 @@ def ejecutar_scripts_sql_server(directorio):
 
 
 if __name__ == "__main__":
+
     # Paso 1: Cambiar año de los ficheros SQL
-    #cambiar_ano_scripts_base()
+    cambiar_ano_scripts_base()
 
     # Paso 2: Ejecución de los ficheros SQL
-    ejecutar_scripts_sql_server(SQL_SCRIPTS_DIR)
+    #ejecutar_scripts_sql_server(SQL_SCRIPTS_DIR)
 
     # Paso 3: Carga de tipos de cambio del año en curso
-    cargar_tipos_cambio(int(f"20{ANIO_NUEVO}"))
+    #cargar_tipos_cambio(int(f"20{ANIO_NUEVO}"))
